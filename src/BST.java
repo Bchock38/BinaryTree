@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+//Benjamin Chock
 
 /**
  * An Integer Binary Search Tree
@@ -48,15 +49,47 @@ public class BST {
      */
     public boolean search(int val) {
         // TODO: Complete the search function
-        return false;
+        return nodeSearch(root, val);
     }
+
+    public boolean nodeSearch(BSTNode curRoot, int val){
+        if (curRoot == null){
+            return false;
+        }
+        else if (curRoot.getVal() == val){
+            return true;
+        }
+        else if (curRoot.getVal() < val){
+            return nodeSearch(curRoot.getRight(), val);
+        }
+        else if (curRoot.getVal() > val){
+            return nodeSearch(curRoot.getLeft(), val);
+        }
+        return true;
+    }
+
+
 
     /**
      * @return ArrayList of BSTNodes in inorder
      */
     public ArrayList<BSTNode> getInorder() {
         // TODO: Complete inorder traversal
-        return null;
+        ArrayList<BSTNode> inorderHolder = new ArrayList<BSTNode>();
+        inorderCreator(root, inorderHolder);
+        return inorderHolder;
+    }
+
+    public ArrayList<BSTNode> inorderCreator(BSTNode curRoot, ArrayList<BSTNode> inorderHolder){
+        if (curRoot == null){
+            return  null;
+        }
+        inorderCreator(curRoot.getLeft(), inorderHolder);
+        inorderHolder.add(curRoot);
+        inorderCreator(curRoot.getRight(), inorderHolder);
+
+        return inorderHolder;
+
     }
 
     /**
@@ -64,7 +97,19 @@ public class BST {
      */
     public ArrayList<BSTNode> getPreorder() {
         // TODO: Complete preorder traversal
-        return null;
+        ArrayList<BSTNode> preorderHolder = new ArrayList<BSTNode>();
+        preorderCreator(root, preorderHolder);
+        return preorderHolder;
+    }
+    public ArrayList<BSTNode> preorderCreator(BSTNode curRoot, ArrayList<BSTNode> preorderHolder){
+        if (curRoot == null){
+            return  null;
+        }
+        preorderHolder.add(curRoot);
+        preorderCreator(curRoot.getLeft(), preorderHolder);
+        preorderCreator(curRoot.getRight(),preorderHolder);
+        return preorderHolder;
+
     }
 
     /**
@@ -72,7 +117,20 @@ public class BST {
      */
     public ArrayList<BSTNode> getPostorder() {
         // TODO: Complete postorder traversal
-        return null;
+        ArrayList<BSTNode> postorderHolder = new ArrayList<BSTNode>();
+        postorderCreator(root, postorderHolder);
+        return postorderHolder;
+    }
+
+    public ArrayList<BSTNode> postorderCreator(BSTNode curRoot, ArrayList<BSTNode> postorderHolder){
+        if (curRoot == null){
+            return  null;
+        }
+        postorderCreator(curRoot.getLeft(), postorderHolder);
+        postorderCreator(curRoot.getRight(), postorderHolder);
+        postorderHolder.add(curRoot);
+        return postorderHolder;
+
     }
 
     /**
@@ -83,6 +141,26 @@ public class BST {
      */
     public void insert(int val) {
         // TODO: Complete insert
+        nodeInsert(root,val);
+    }
+
+    public boolean nodeInsert(BSTNode curRoot, int val){
+        if (curRoot.getLeft() == null && curRoot.getVal() < val){
+            curRoot.setRight(new BSTNode(val));
+            return true;
+        }
+        else if (curRoot.getLeft() == null && curRoot.getVal() > val){
+            curRoot.setLeft(new BSTNode(val));
+            return true;
+        }
+
+        else if (curRoot.getVal() < val){
+            return nodeInsert(curRoot.getRight(), val);
+        }
+        else if (curRoot.getVal() > val){
+            return nodeInsert(curRoot.getLeft(), val);
+        }
+        return true;
     }
 
     /**
